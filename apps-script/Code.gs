@@ -3,7 +3,7 @@
 // Deploy: Google Apps Script → Web App (Anyone can access)
 // ============================================================
 
-const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID'; // ← Thay bằng ID Google Sheet thực tế
+const SHEET_ID = '1CR8zeeEU5arddROKvjKwzB3NHGDhdBATCWo8_gY4CDQ';
 
 function getSpreadsheet() {
   return SpreadsheetApp.openById(SHEET_ID);
