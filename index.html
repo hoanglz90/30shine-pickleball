@@ -1,0 +1,3446 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>30Shine PickleBall Club</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════
+   30Shine PickleBall Club — Design System
+   ═══════════════════════════════════════════════════════════ */
+:root {
+  --navy: #1B3A6B;
+  --navy-dark: #122748;
+  --navy-light: #2a5290;
+  --green: #2E7D32;
+  --green-light: #4CAF50;
+  --green-bg: #e8f5e9;
+  --green-surface: #f1f8e9;
+  --bg: #f5f3ef;
+  --white: #ffffff;
+  --text: #1a1a1a;
+  --text-secondary: #6b7280;
+  --border: #e5e7eb;
+  --border-dark: #d1d5db;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --warning: #f59e0b;
+  --gold: #D4A017;
+  --gold-bg: #fef9e7;
+  --silver: #9CA3AF;
+  --bronze: #CD7F32;
+  --purple: #7c3aed;
+  --purple-bg: #ede9fe;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 6px rgba(0,0,0,0.07), 0 10px 24px rgba(0,0,0,0.06);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Login Screen ────────────────────────────────────────── */
+#screen-login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-logo { margin-bottom: 8px; }
+.login-logo svg { width: 56px; height: 56px; }
+.login-title { font-size: 28px; font-weight: 700; margin-bottom: 4px; color: var(--navy); }
+.login-subtitle { font-size: 14px; color: var(--text-secondary); margin-bottom: 32px; }
+
+.login-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.login-btn {
+  padding: 16px 12px;
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius);
+  background: var(--green-surface);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.login-btn:active { transform: scale(0.97); }
+.login-btn:hover { border-color: var(--green); background: var(--green-bg); }
+
+.login-btn.admin::before { content: '⭐'; }
+.login-btn.member::before { content: '🟢'; }
+.login-btn.guest-btn {
+  grid-column: 1 / -1;
+  background: var(--white);
+  border-style: dashed;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.login-btn.guest-btn::before { content: '➕'; }
+
+/* ── App Shell ───────────────────────────────────────────── */
+#app { display: none; padding-bottom: 80px; }
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--white);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-logo { font-size: 28px; display: flex; align-items: center; }
+.header-logo svg { width: 32px; height: 32px; }
+.header-title { font-weight: 700; font-size: 16px; color: var(--navy); }
+.header-date { font-size: 12px; color: var(--text-secondary); }
+
+.header-user {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg);
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.header-user .role-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--navy);
+  color: var(--white);
+  letter-spacing: 0.5px;
+}
+
+/* ── Bottom Nav ──────────────────────────────────────────── */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding: 6px 0;
+  padding-bottom: max(6px, env(safe-area-inset-bottom));
+}
+
+.nav-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  transition: color 0.2s;
+}
+
+.nav-item .nav-icon { font-size: 22px; }
+
+.nav-item.active {
+  color: var(--navy);
+  font-weight: 600;
+}
+
+.nav-item.active .nav-icon-wrap {
+  background: var(--navy);
+  color: var(--white);
+  padding: 6px 18px;
+  border-radius: 16px;
+}
+
+/* ── Tab Panels ──────────────────────────────────────────── */
+.tab-panel { display: none; padding: 16px; }
+.tab-panel.active { display: block; }
+
+/* ── Section Headers ─────────────────────────────────────── */
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.section-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* ── Cards ───────────────────────────────────────────────── */
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow);
+}
+
+.card-dark {
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+  color: var(--white);
+  border: none;
+}
+
+.card-green {
+  background: linear-gradient(135deg, var(--green), var(--green-light));
+  color: var(--white);
+  border: none;
+}
+
+.card-gold {
+  background: var(--gold-bg);
+  border-color: var(--gold);
+}
+
+/* ── Session Card (Tab Hôm nay) ──────────────────────────── */
+.session-card {
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--green) 100%);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.session-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.session-date { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.session-status {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.2);
+}
+
+.session-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.session-stat-label { font-size: 11px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.5px; }
+.session-stat-value { font-size: 28px; font-weight: 800; }
+.session-stat-value small { font-size: 14px; font-weight: 400; opacity: 0.7; }
+
+.session-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--green-light);
+  color: var(--white);
+  flex: 1;
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.2);
+  color: var(--white);
+  backdrop-filter: blur(4px);
+}
+
+.btn-outline {
+  background: var(--white);
+  color: var(--text);
+  border: 1px solid var(--border-dark);
+}
+
+.btn-danger { background: var(--danger); color: var(--white); }
+.btn-full { width: 100%; }
+.btn-sm { padding: 8px 14px; font-size: 13px; }
+
+/* ── Attendance Chips ────────────────────────────────────── */
+.attendance-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.chip {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chip.active {
+  background: var(--green-bg);
+  border-color: var(--green);
+  color: var(--green);
+  font-weight: 600;
+}
+
+.chip-add {
+  border-style: dashed;
+  color: var(--text-secondary);
+}
+
+/* ── Match Cards ─────────────────────────────────────────── */
+.match-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.match-type {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.match-teams {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.match-team {
+  flex: 1;
+  text-align: center;
+}
+
+.match-team-names {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.match-team.winner .match-team-names { color: var(--green); }
+.match-team.winner::after {
+  content: '🏆';
+  font-size: 12px;
+}
+
+.match-vs {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.match-scores {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.match-set {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--bg);
+}
+
+.match-set.won { background: var(--green-bg); color: var(--green); }
+.match-set.lost { background: #fef2f2; color: var(--danger); }
+
+.match-bet {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: 8px;
+}
+
+.match-delete {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  opacity: 0.4;
+  padding: 4px;
+}
+.match-delete:hover { opacity: 1; }
+
+/* ── Leaderboard ─────────────────────────────────────────── */
+.period-filter {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  background: var(--white);
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.period-btn {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.period-btn.active {
+  background: var(--navy);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.podium {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 12px 0;
+}
+
+.podium-item {
+  flex: 1;
+  max-width: 120px;
+  text-align: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 8px;
+  position: relative;
+}
+
+.podium-item.gold {
+  border-color: var(--gold);
+  background: var(--gold-bg);
+  transform: translateY(-12px);
+}
+
+.podium-rank {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.podium-item.gold .podium-rank { background: var(--gold); }
+.podium-item.silver .podium-rank { background: var(--silver); }
+.podium-item.bronze .podium-rank { background: var(--bronze); }
+
+.podium-name { font-size: 15px; font-weight: 700; margin-top: 6px; }
+.podium-stat { font-size: 13px; color: var(--green); font-weight: 600; }
+
+.rank-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+
+.rank-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.rank-info { flex: 1; }
+.rank-name { font-size: 15px; font-weight: 600; }
+.rank-stats { font-size: 12px; color: var(--text-secondary); }
+.rank-stats .win-rate { color: var(--green); font-weight: 600; }
+.rank-stats .lose-rate { color: var(--danger); font-weight: 600; }
+.rank-total { font-weight: 700; font-size: 15px; color: var(--navy); }
+
+/* ── Badges ──────────────────────────────────────────────── */
+.badge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.badge-card {
+  background: var(--gold-bg);
+  border: 1px solid #f0e6c0;
+  border-radius: var(--radius);
+  padding: 14px;
+}
+
+.badge-icon { font-size: 24px; margin-bottom: 4px; }
+.badge-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: var(--gold); }
+.badge-player { font-size: 15px; font-weight: 700; margin-top: 2px; }
+.badge-value { font-size: 12px; color: var(--text-secondary); }
+
+/* ── Fund ────────────────────────────────────────────────── */
+.fund-balance-card {
+  background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-light) 100%);
+  color: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.fund-label { font-size: 11px; text-transform: uppercase; letter-spacing: 1.2px; opacity: 0.8; margin-bottom: 4px; }
+.fund-amount { font-size: 36px; font-weight: 800; letter-spacing: 1px; }
+.fund-amount sup { font-size: 16px; font-weight: 400; }
+
+.fund-split {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 16px;
+}
+
+.fund-split-item { text-align: center; }
+.fund-split-label { font-size: 11px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; }
+.fund-split-value { font-size: 20px; font-weight: 700; }
+.fund-split-value.income { color: #86efac; }
+.fund-split-value.expense { color: #fca5a5; }
+
+.tx-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+}
+
+.tx-info { flex: 1; }
+.tx-name { font-size: 15px; font-weight: 600; }
+.tx-detail { font-size: 12px; color: var(--text-secondary); }
+.tx-amount { font-weight: 700; font-size: 15px; }
+.tx-amount.pending { color: var(--danger); }
+.tx-amount.confirmed { color: var(--success); }
+
+.tx-status {
+  font-size: 11px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.tx-status.pending { background: #fef3c7; color: #92400e; }
+.tx-status.reported { background: #dbeafe; color: #1e40af; }
+.tx-status.confirmed { background: #dcfce7; color: #166534; }
+
+.bank-card {
+  background: var(--green-bg);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+.bank-card-header {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--green);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bank-number {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  margin-bottom: 4px;
+}
+
+.bank-name { font-size: 14px; font-weight: 600; }
+.bank-note { font-size: 12px; color: var(--text-secondary); margin-top: 6px; }
+
+/* ── Guide ───────────────────────────────────────────────── */
+.guide-section {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.guide-role {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.guide-role-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: var(--green-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.guide-role-name { font-weight: 700; font-size: 16px; }
+.guide-role-desc { font-size: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+
+.guide-step {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.guide-step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+.guide-step-content { flex: 1; }
+.guide-step-title { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+.guide-step-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+/* ── Modal ───────────────────────────────────────────────── */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 200;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal-content {
+  background: var(--white);
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.modal-title { font-size: 20px; font-weight: 700; }
+
+.modal-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Form Elements ───────────────────────────────────────── */
+.form-group { margin-bottom: 16px; }
+
+.form-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 15px;
+  background: var(--white);
+  transition: border-color 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--navy);
+}
+
+.toggle-group {
+  display: flex;
+  gap: 4px;
+  background: var(--bg);
+  padding: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+
+.toggle-btn.active {
+  background: var(--white);
+  color: var(--text);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+
+/* ── Score Input ─────────────────────────────────────────── */
+.score-sets { margin-bottom: 16px; }
+
+.score-set-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.score-set-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  width: 50px;
+}
+
+.score-input-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+}
+
+.score-input {
+  width: 56px;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.score-input:focus { outline: none; border-color: var(--navy); }
+
+.score-dash { font-weight: 700; color: var(--text-secondary); }
+
+/* ── Player Select ───────────────────────────────────────── */
+.player-slots {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.player-slot {
+  flex: 1;
+  padding: 12px;
+  border: 2px dashed var(--border-dark);
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.player-slot.filled {
+  border-style: solid;
+  border-color: var(--green);
+  background: var(--green-bg);
+  color: var(--green);
+  font-weight: 600;
+}
+
+.player-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.player-pick-btn {
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  background: var(--white);
+  transition: all 0.2s;
+}
+
+.player-pick-btn:hover { border-color: var(--green); }
+.player-pick-btn.selected { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+.player-pick-btn.disabled { opacity: 0.3; pointer-events: none; }
+
+/* ── Winner Select ───────────────────────────────────────── */
+.winner-select {
+  display: flex;
+  gap: 8px;
+}
+
+.winner-btn {
+  flex: 1;
+  padding: 14px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--white);
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.winner-btn.selected {
+  border-color: var(--green);
+  background: var(--green-bg);
+  color: var(--green);
+}
+
+/* ── Toast ───────────────────────────────────────────────── */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  padding: 12px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white);
+  z-index: 999;
+  transition: transform 0.3s ease;
+  max-width: 90%;
+  text-align: center;
+}
+
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.success { background: var(--success); }
+.toast.error { background: var(--danger); }
+.toast.info { background: var(--navy); }
+
+/* ── Empty State ─────────────────────────────────────────── */
+.empty-state {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-secondary);
+}
+
+.empty-state-icon { font-size: 40px; margin-bottom: 8px; }
+.empty-state-text { font-size: 14px; }
+
+/* ── Loading ─────────────────────────────────────────────── */
+.loading {
+  text-align: center;
+  padding: 24px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.spinner {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--border);
+  border-top-color: var(--navy);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Responsive ──────────────────────────────────────────── */
+/* ── Admin Panel ──────────────────────────────────────────── */
+.admin-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.admin-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-action:last-child { border-bottom: none; }
+
+.admin-action-info { flex: 1; }
+.admin-action-label { font-size: 14px; font-weight: 600; }
+.admin-action-desc { font-size: 12px; color: var(--text-secondary); }
+
+.member-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.member-row:last-child { border-bottom: none; }
+
+.member-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.member-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--green-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.member-name { font-size: 14px; font-weight: 600; }
+.member-role {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+.member-role.admin { background: var(--navy); color: var(--white); }
+.member-role.member { background: var(--green-bg); color: var(--green); }
+.member-role.guest { background: #fef3c7; color: #92400e; }
+
+.member-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+.icon-btn:hover { background: var(--bg); }
+.icon-btn.danger:hover { background: #fef2f2; border-color: var(--danger); }
+
+.fund-init-card {
+  background: linear-gradient(135deg, var(--navy-dark), var(--navy));
+  color: var(--white);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.fund-init-amount {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 8px 0;
+}
+
+/* ── QR Code ──────────────────────────────────────────────── */
+.qr-image {
+  width: 100%;
+  max-width: 280px;
+  margin: 12px auto;
+  display: block;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+/* ── Admin PIN Modal ─────────────────────────────────────── */
+.pin-input {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pin-digit {
+  width: 48px;
+  height: 56px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+  border: 2px solid var(--border-dark);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+}
+
+.pin-digit:focus { outline: none; border-color: var(--navy); }
+
+/* ── Fund Sections ───────────────────────────────────────── */
+.fund-section {
+  margin-bottom: 20px;
+}
+
+.fund-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+@media (min-width: 480px) {
+  .tab-panel { max-width: 480px; margin: 0 auto; }
+  .modal-content { border-radius: var(--radius-xl); margin-bottom: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LOGIN SCREEN
+     ═══════════════════════════════════════════════════════════ -->
+<div id="screen-login">
+  <div class="login-logo"><svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="38" rx="28" ry="30" fill="#1B3A6B" stroke="#122748" stroke-width="3"/><circle cx="42" cy="30" r="3" fill="#fff" opacity="0.5"/><circle cx="54" cy="26" r="3" fill="#fff" opacity="0.5"/><circle cx="48" cy="40" r="3" fill="#fff" opacity="0.5"/><circle cx="38" cy="42" r="3" fill="#fff" opacity="0.5"/><circle cx="56" cy="38" r="3" fill="#fff" opacity="0.5"/><circle cx="50" cy="50" r="3" fill="#fff" opacity="0.5"/><circle cx="62" cy="30" r="3" fill="#fff" opacity="0.5"/><rect x="46" y="64" width="8" height="22" rx="3" fill="#4CAF50" stroke="#2E7D32" stroke-width="2"/><circle cx="76" cy="16" r="10" fill="#C8E600" stroke="#9AB000" stroke-width="2"/><circle cx="73" cy="13" r="2" fill="#9AB000" opacity="0.6"/><circle cx="79" cy="13" r="2" fill="#9AB000" opacity="0.6"/><circle cx="76" cy="19" r="2" fill="#9AB000" opacity="0.6"/></svg></div>
+  <h1 class="login-title">30Shine PickleBall Club</h1>
+  <p class="login-subtitle">Chọn tên để bắt đầu</p>
+  <div class="login-grid" id="loginGrid">
+    <div class="loading"><div class="spinner"></div><br>Đang tải...</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MAIN APP
+     ═══════════════════════════════════════════════════════════ -->
+<div id="app">
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-left">
+      <span class="header-logo"><svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><ellipse cx="50" cy="38" rx="28" ry="30" fill="#1B3A6B" stroke="#122748" stroke-width="3"/><circle cx="42" cy="30" r="3" fill="#fff" opacity="0.5"/><circle cx="54" cy="26" r="3" fill="#fff" opacity="0.5"/><circle cx="48" cy="40" r="3" fill="#fff" opacity="0.5"/><circle cx="56" cy="38" r="3" fill="#fff" opacity="0.5"/><rect x="46" y="64" width="8" height="22" rx="3" fill="#4CAF50" stroke="#2E7D32" stroke-width="2"/><circle cx="76" cy="16" r="10" fill="#C8E600" stroke="#9AB000" stroke-width="2"/><circle cx="73" cy="13" r="2" fill="#9AB000" opacity="0.6"/><circle cx="79" cy="13" r="2" fill="#9AB000" opacity="0.6"/><circle cx="76" cy="19" r="2" fill="#9AB000" opacity="0.6"/></svg></span>
+      <div>
+        <div class="header-title">30Shine PickleBall</div>
+        <div class="header-date" id="headerDate"></div>
+      </div>
+    </div>
+    <div class="header-user" id="headerUser"></div>
+  </header>
+
+  <!-- Tab: Hôm nay -->
+  <section class="tab-panel active" id="tab-today">
+    <div id="sessionCard"></div>
+    <div id="attendanceSection"></div>
+    <div class="section-label" style="margin-top:16px">
+      <span id="matchCountLabel">Trận hôm nay · 0</span>
+      <span style="float:right;color:var(--text-secondary);font-weight:400;text-transform:none;font-size:12px" id="matchHint"></span>
+    </div>
+    <div id="matchesList"></div>
+  </section>
+
+  <!-- Tab: Bảng vàng -->
+  <section class="tab-panel" id="tab-leaderboard">
+    <div class="section-label">Bảng vàng</div>
+    <div class="section-title" style="margin-bottom:16px">Xếp hạng</div>
+
+    <div class="period-filter" id="periodFilter">
+      <button class="period-btn" data-period="week">Tuần</button>
+      <button class="period-btn active" data-period="month">Tháng</button>
+      <button class="period-btn" data-period="year">Năm</button>
+      <button class="period-btn" data-period="all">Tất cả</button>
+    </div>
+
+    <div style="font-size:11px;color:var(--text-secondary);margin-bottom:12px;display:flex;gap:12px;justify-content:center">
+      <span>W = Thắng</span>
+      <span>L = Thua</span>
+      <span>% win = Tỷ lệ thắng</span>
+    </div>
+
+    <div id="podiumSection"></div>
+    <div id="rankingList"></div>
+
+    <div style="margin-top:24px" id="badgesSection"></div>
+  </section>
+
+  <!-- Tab: Quỹ -->
+  <section class="tab-panel" id="tab-fund">
+    <div class="section-label">Quỹ nhóm</div>
+    <div id="fundBalanceCard"></div>
+    <div id="bankInfo"></div>
+    <div id="fundPending"></div>
+    <div id="fundIncomeHistory"></div>
+    <div id="fundExpenseHistory"></div>
+    <div id="fundAuditLog"></div>
+  </section>
+
+  <!-- Tab: Quy Chế & Hướng dẫn -->
+  <section class="tab-panel" id="tab-guide">
+    <!-- QUY CHẾ -->
+    <div class="section-label">Quy chế</div>
+    <h2 class="section-title" style="margin-bottom:16px">Nội quy nhóm</h2>
+
+    <div class="guide-section" style="border-left:3px solid var(--navy)">
+      <div id="quyCheContent">
+        <div class="guide-step">
+          <div class="guide-step-num">📍</div>
+          <div class="guide-step-content">
+            <div class="guide-step-title">Địa Điểm Sân</div>
+            <div class="guide-step-desc" style="color:var(--text)"><i>(Admin cập nhật)</i></div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-step-num">🕐</div>
+          <div class="guide-step-content">
+            <div class="guide-step-title">Thời gian</div>
+            <div class="guide-step-desc" style="color:var(--text)"><i>(Admin cập nhật)</i></div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-step-num">💵</div>
+          <div class="guide-step-content">
+            <div class="guide-step-title">Phí hàng tháng</div>
+            <div class="guide-step-desc" style="color:var(--text)"><i>(Admin cập nhật)</i></div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-step-num">📢</div>
+          <div class="guide-step-content">
+            <div class="guide-step-title">Báo trước</div>
+            <div class="guide-step-desc" style="color:var(--text)">Không Đi / Đi muộn / Về sớm / Rủ bạn bè tham gia — đều phải báo trước anh em trong nhóm chat.</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-step-num">🎰</div>
+          <div class="guide-step-content">
+            <div class="guide-step-title">Đánh Độ</div>
+            <div class="guide-step-desc" style="color:var(--text)">Đánh Độ (nếu có) tiền 100% vào quỹ chung. Không ngoại lệ.</div>
+          </div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-step-num">⭐</div>
+          <div class="guide-step-content">
+            <div class="guide-step-title">Admin</div>
+            <div class="guide-step-desc" style="color:var(--text)">Trung Béo — quản lý quỹ, xác nhận CK, thêm/xóa thành viên.</div>
+          </div>
+        </div>
+      </div>
+      <div id="quyCheExtra"></div>
+    </div>
+
+    <!-- HƯỚNG DẪN SỬ DỤNG APP -->
+    <div class="section-label" style="margin-top:28px">Hướng dẫn</div>
+    <h2 class="section-title">Bạn cần làm gì?</h2>
+    <p class="section-desc">App chia 2 vai trò — bạn chỉ cần quan tâm phần của mình.</p>
+
+    <div class="guide-section">
+      <div class="guide-role">
+        <div class="guide-role-icon">👤</div>
+        <div>
+          <div class="guide-role-desc">Vai trò</div>
+          <div class="guide-role-name">Member</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">01</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Ghi trận vừa đánh</div>
+          <div class="guide-step-desc">Tab Hôm nay → "+ Ghi trận mới" → chọn Đôi/Đơn → chọn người → nhập tỷ số → chọn đội thắng. App tự tính phí cho đội thua.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">02</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Báo CK khi đã chuyển khoản</div>
+          <div class="guide-step-desc">Tab Quỹ → tap "Báo đã CK" → nhập số tiền + ghi chú → gửi. Chờ admin xác nhận.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="guide-role">
+        <div class="guide-role-icon">⚡</div>
+        <div>
+          <div class="guide-role-desc">Vai trò</div>
+          <div class="guide-role-name">Admin</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">01</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Xác nhận CK</div>
+          <div class="guide-step-desc">Tab Quỹ → mục "Chờ duyệt" → tap "Xác nhận" khi đã nhận tiền.</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">02</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Xóa trận sai</div>
+          <div class="guide-step-desc">Tab Hôm nay → tap icon thùng rác trên trận muốn xóa. Chỉ admin mới thấy nút này.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="guide-section">
+      <div class="section-label" style="margin-bottom:12px">Danh hiệu</div>
+      <div class="guide-step">
+        <div class="guide-step-num">👑</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Vua trận</div>
+          <div class="guide-step-desc">Đánh nhiều trận nhất trong kỳ</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">🔥</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Chuỗi Bất Bại</div>
+          <div class="guide-step-desc">Thắng liên tiếp ≥ 3 trận</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">🥶</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Chuỗi Thất Bại</div>
+          <div class="guide-step-desc">Thua liên tiếp ≥ 3 trận</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">💎</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Cặp đôi vàng</div>
+          <div class="guide-step-desc">Cặp doubles win rate cao nhất (tối thiểu 3 trận)</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">🤝</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Cạ Cứng</div>
+          <div class="guide-step-desc">Cặp đánh chung nhiều trận nhất</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">💵</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Mạnh thường quân</div>
+          <div class="guide-step-desc">Đóng nhiều nhất (nộp phí + thua độ + donate)</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">👿</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Khắc tinh</div>
+          <div class="guide-step-desc">Thắng 1 đối thủ cụ thể nhiều nhất (≥70%, tối thiểu 3 trận)</div>
+        </div>
+      </div>
+      <div class="guide-step">
+        <div class="guide-step-num">🐔</div>
+        <div class="guide-step-content">
+          <div class="guide-step-title">Tướng gà</div>
+          <div class="guide-step-desc">Thua nhiều nhất trong kỳ</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <button class="btn btn-outline btn-full" onclick="logout()" style="color:var(--text-secondary)">🚪 Đăng xuất / Đổi người</button>
+    </div>
+
+    <div style="text-align:center;padding:16px;font-size:12px;color:var(--text-secondary)">
+      Made with 🥒 by 30Shine PickleBall Club
+    </div>
+  </section>
+
+  <!-- Tab: Admin (chỉ hiện cho admin) -->
+  <section class="tab-panel" id="tab-admin">
+    <div class="section-label">Quản trị</div>
+    <h2 class="section-title" style="margin-bottom:16px">Admin Panel</h2>
+
+    <!-- Tồn đầu quỹ -->
+    <div class="admin-card">
+      <div class="admin-card-title">💰 Tồn đầu quỹ</div>
+      <div id="fundInitDisplay"></div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <input type="text" class="form-input" id="fundInitInput" inputmode="numeric" placeholder="VD: 1.000.000" oninput="formatMoneyInput(this)" style="flex:1">
+        <button class="btn btn-primary" onclick="setFundInit()">Cập nhật</button>
+      </div>
+      <div style="font-size:12px;color:var(--text-secondary);margin-top:6px">Số tiền quỹ có sẵn trước khi bắt đầu dùng app</div>
+    </div>
+
+    <!-- Quản lý thành viên -->
+    <div class="admin-card">
+      <div class="admin-card-title">👥 Thành viên <span style="font-weight:400;font-size:12px;color:var(--text-secondary)" id="memberCount"></span></div>
+      <div id="memberList"></div>
+      <div style="display:flex;gap:8px;margin-top:12px">
+        <input type="text" class="form-input" id="newMemberName" placeholder="Tên thành viên mới" style="flex:1">
+        <button class="btn btn-primary" onclick="adminAddMember()">+ Thêm</button>
+      </div>
+    </div>
+
+    <!-- Quỹ: hướng dẫn -->
+    <div class="admin-card">
+      <div class="admin-card-title">✅ Xác nhận thu / chi</div>
+      <div style="font-size:13px;color:var(--text-secondary);line-height:1.6">
+        Vào tab <b>Quỹ</b> để:<br>
+        • Bấm <b>"Đã nhận tiền"</b> trên bất kỳ khoản nợ nào<br>
+        • Dùng form <b>"Ghi khoản chi"</b> bên dưới để ghi chi tiêu
+      </div>
+    </div>
+
+    <!-- Quỹ: Báo cáo chi -->
+    <div class="admin-card">
+      <div class="admin-card-title">📝 Ghi khoản chi</div>
+      <div class="form-group">
+        <label class="form-label">Mô tả</label>
+        <input type="text" class="form-input" id="expenseNote" placeholder="VD: Mua bóng pickle x10">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Số tiền (VNĐ)</label>
+        <input type="text" class="form-input" id="expenseAmount" inputmode="numeric" placeholder="VD: 350.000" oninput="formatMoneyInput(this)">
+      </div>
+      <button class="btn btn-primary btn-full" onclick="adminAddExpense()">Ghi khoản chi</button>
+    </div>
+
+    <!-- Sửa Quy Chế -->
+    <div class="admin-card">
+      <div class="admin-card-title">📋 Sửa Quy Chế</div>
+      <div class="form-group">
+        <label class="form-label">Địa điểm sân</label>
+        <input type="text" class="form-input" id="cfgLocation" placeholder="VD: Sân ABC, Q.Phú Nhuận">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Thời gian</label>
+        <input type="text" class="form-input" id="cfgSchedule" placeholder="VD: Thứ 4 & Thứ 7, 18h-20h">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Phí hàng tháng</label>
+        <input type="text" class="form-input" id="cfgMonthlyFee" inputmode="numeric" placeholder="VD: 500.000" oninput="formatMoneyInput(this)">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ghi chú thêm (free text)</label>
+        <textarea class="form-input" id="cfgExtraRules" rows="4" placeholder="Nội dung bổ sung quy chế..."></textarea>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="saveQuyChe()">Lưu Quy Chế</button>
+    </div>
+
+    <!-- Cài đặt ngân hàng -->
+    <div class="admin-card">
+      <div class="admin-card-title">🏦 Thông tin ngân hàng</div>
+      <div class="form-group">
+        <label class="form-label">Tên ngân hàng</label>
+        <input type="text" class="form-input" id="cfgBankName" value="MB Bank">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Số tài khoản</label>
+        <input type="text" class="form-input" id="cfgBankAccount" value="5000199991996">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Chủ tài khoản</label>
+        <input type="text" class="form-input" id="cfgAccountHolder" value="NGUYEN THANH TRUNG">
+      </div>
+      <button class="btn btn-outline btn-full" onclick="saveBankConfig()">Lưu thông tin</button>
+    </div>
+
+    <!-- Logout -->
+    <div style="margin-top:24px">
+      <button class="btn btn-outline btn-full" onclick="logout()" style="color:var(--danger);border-color:var(--danger)">🚪 Đăng xuất</button>
+    </div>
+  </section>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav" id="bottomNav">
+    <button class="nav-item active" data-tab="tab-today">
+      <span class="nav-icon-wrap"><span class="nav-icon">🏠</span></span>
+      <span>Hôm nay</span>
+    </button>
+    <button class="nav-item" data-tab="tab-leaderboard">
+      <span class="nav-icon-wrap"><span class="nav-icon">🏆</span></span>
+      <span>Bảng vàng</span>
+    </button>
+    <button class="nav-item" data-tab="tab-fund">
+      <span class="nav-icon-wrap"><span class="nav-icon">💰</span></span>
+      <span>Quỹ</span>
+    </button>
+    <button class="nav-item" data-tab="tab-guide">
+      <span class="nav-icon-wrap"><span class="nav-icon">📋</span></span>
+      <span>Quy chế</span>
+    </button>
+    <button class="nav-item admin-only-nav" data-tab="tab-admin" style="display:none">
+      <span class="nav-icon-wrap"><span class="nav-icon">⚙️</span></span>
+      <span>Admin</span>
+    </button>
+  </nav>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MODALS
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- Modal: Record Match -->
+<div class="modal-overlay" id="modal-match">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Ghi trận mới</h3>
+      <button class="modal-close" onclick="closeModal('modal-match')">✕</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Loại trận</label>
+      <div class="toggle-group">
+        <button class="toggle-btn active" onclick="setMatchType('doubles')">Đôi (2v2)</button>
+        <button class="toggle-btn" onclick="setMatchType('singles')">Đơn (1v1)</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Team A</label>
+      <div class="player-slots" id="slotsA"></div>
+    </div>
+
+    <div style="text-align:center;font-weight:700;color:var(--text-secondary);margin-bottom:12px">VS</div>
+
+    <div class="form-group">
+      <label class="form-label">Team B</label>
+      <div class="player-slots" id="slotsB"></div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Chọn người chơi</label>
+      <div class="player-picker" id="playerPicker"></div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Best of</label>
+      <div class="toggle-group">
+        <button class="toggle-btn active" onclick="setBestOf(1)">1 set</button>
+        <button class="toggle-btn" onclick="setBestOf(3)">3 sets</button>
+      </div>
+    </div>
+
+    <div class="form-group score-sets" id="scoreSets"></div>
+
+    <div class="form-group">
+      <label class="form-label">Đội thắng</label>
+      <div class="winner-select" id="winnerSelect">
+        <button class="winner-btn" onclick="setWinner('team_a')">🏆 Team A</button>
+        <button class="winner-btn" onclick="setWinner('team_b')">🏆 Team B</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Tiền độ (VNĐ / người thua) — 0 = Trà Xanh 0 Độ 🍵</label>
+      <input type="text" class="form-input" id="betAmount" value="0" inputmode="numeric" placeholder="0 = không độ" oninput="formatMoneyInput(this)" data-raw-value="0">
+    </div>
+
+    <button class="btn btn-primary btn-full" onclick="submitMatch()" id="submitMatchBtn">
+      Ghi trận
+    </button>
+  </div>
+</div>
+
+<!-- Modal: Report Payment -->
+<div class="modal-overlay" id="modal-payment">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title">Báo đã chuyển khoản</h3>
+      <button class="modal-close" onclick="closeModal('modal-payment')">✕</button>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Số tiền (VNĐ)</label>
+      <input type="text" class="form-input" id="payAmount" inputmode="numeric" placeholder="VD: 150.000" oninput="formatMoneyInput(this)">
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Loại</label>
+      <div class="toggle-group">
+        <button class="toggle-btn active" onclick="setPayType('match_fee')">Phí thua trận</button>
+        <button class="toggle-btn" onclick="setPayType('donation')">Nộp Quỹ / Donate</button>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label">Ghi chú</label>
+      <input type="text" class="form-input" id="payNote" placeholder="VD: CK buổi T4 06/05">
+    </div>
+
+    <button class="btn btn-primary btn-full" onclick="submitPayment()">
+      Báo nộp
+    </button>
+  </div>
+</div>
+
+<!-- Modal: Admin PIN -->
+<div class="modal-overlay" id="modal-pin">
+  <div class="modal-content" style="text-align:center">
+    <div class="modal-header">
+      <h3 class="modal-title" id="pinModalTitle">🔒 Nhập mã PIN</h3>
+      <button class="modal-close" onclick="closeModal('modal-pin')">✕</button>
+    </div>
+    <p style="color:var(--text-secondary);font-size:14px;margin-bottom:8px" id="pinModalDesc">Nhập mã PIN để đăng nhập</p>
+    <div class="pin-input">
+      <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" oninput="pinNext(this,0)">
+      <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" oninput="pinNext(this,1)">
+      <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" oninput="pinNext(this,2)">
+      <input type="password" class="pin-digit" maxlength="1" inputmode="numeric" pattern="[0-9]" oninput="pinNext(this,3)">
+    </div>
+    <div id="pinError" style="color:var(--danger);font-size:13px;margin-bottom:12px;display:none">Sai mã PIN!</div>
+    <button class="btn btn-primary btn-full" onclick="verifyPin()">Xác nhận</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     JAVASCRIPT
+     ═══════════════════════════════════════════════════════════ -->
+<script>
+// ── Config ──────────────────────────────────────────────────
+const API_URL = 'YOUR_GOOGLE_APPS_SCRIPT_URL'; // ← Deploy GAS rồi paste URL vào đây
+
+// ── State ───────────────────────────────────────────────────
+let currentUser = null; // { name, role }
+let members = [];
+let todayMatches = [];
+let attendance = [];
+let config = {};
+
+// Match form state
+let matchForm = {
+  type: 'doubles',
+  teamA: [],
+  teamB: [],
+  bestOf: 1,
+  winner: null,
+  selectingFor: null // 'a' or 'b'
+};
+
+let payType = 'match_fee';
+const ADMIN_PIN = '2222';
+const MEMBER_PIN = '1234';
+let pendingAdminAction = null; // callback after PIN verified
+
+// Cache
+const CACHE_TTL = 5 * 60 * 1000;
+const cache = {};
+
+// ── API Layer ───────────────────────────────────────────────
+
+async function apiGet(action, params = {}) {
+  const key = action + JSON.stringify(params);
+  if (cache[key] && Date.now() - cache[key].ts < CACHE_TTL) {
+    return cache[key].data;
+  }
+  const url = new URL(API_URL);
+  url.searchParams.set('action', action);
+  Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+
+  try {
+    const res = await fetch(url.toString());
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    cache[key] = { data, ts: Date.now() };
+    return data;
+  } catch (err) {
+    console.error('API GET error:', err);
+    throw err;
+  }
+}
+
+async function apiPost(action, body = {}) {
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' }, // GAS requires text/plain for CORS
+      body: JSON.stringify({ action, ...body })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    // Invalidate relevant cache
+    invalidateCache(action);
+    return data;
+  } catch (err) {
+    console.error('API POST error:', err);
+    throw err;
+  }
+}
+
+function invalidateCache(action) {
+  const patterns = {
+    recordMatch: ['getMatches', 'getLeaderboard', 'getFund', 'getBadges'],
+    deleteMatch: ['getMatches', 'getLeaderboard', 'getFund', 'getBadges'],
+    reportPayment: ['getFund'],
+    confirmPayment: ['getFund'],
+    addGuest: ['getMembers'],
+    updateAttendance: ['getSession']
+  };
+  const toInvalidate = patterns[action] || [];
+  Object.keys(cache).forEach(k => {
+    if (toInvalidate.some(p => k.includes(p))) delete cache[k];
+  });
+}
+
+// ── Helpers ─────────────────────────────────────────────────
+
+function formatVND(n) {
+  n = Number(n) || 0;
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ';
+}
+
+function formatShort(n) {
+  n = Number(n) || 0;
+  if (n >= 1000000) return (n / 1000000).toFixed(1).replace('.0', '') + 'tr';
+  if (n >= 1000) return Math.round(n / 1000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'k';
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + 'đ';
+}
+
+// Format input fields with dots as user types
+function formatMoneyInput(input) {
+  let val = input.value.replace(/\D/g, '');
+  input.value = val.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+  input.dataset.rawValue = val;
+}
+
+function getMoneyInputValue(input) {
+  return parseInt((input.dataset.rawValue || input.value || '0').replace(/\D/g, '')) || 0;
+}
+
+function todayStr() {
+  const d = new Date();
+  const offset = d.getTimezoneOffset();
+  const local = new Date(d.getTime() - offset * 60000);
+  return local.toISOString().split('T')[0];
+}
+
+function formatDateVN(dateStr) {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  const days = ['Chủ nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+  return days[d.getDay()] + ', ' + dateStr.split('-').reverse().join('/');
+}
+
+// ── Toast ───────────────────────────────────────────────────
+
+function showToast(msg, type = 'info') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast ' + type + ' show';
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ── Tab Navigation ──────────────────────────────────────────
+
+document.querySelectorAll('.nav-item').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const tab = btn.dataset.tab;
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(tab).classList.add('active');
+
+    // Load data when switching tabs
+    if (tab === 'tab-leaderboard') loadLeaderboard();
+    if (tab === 'tab-fund') loadFund();
+  });
+});
+
+// ── Period Filter ───────────────────────────────────────────
+
+document.querySelectorAll('.period-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    loadLeaderboard(btn.dataset.period);
+  });
+});
+
+// ── Modal ───────────────────────────────────────────────────
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(modal => {
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal(modal.id);
+  });
+});
+
+// ══════════════════════════════════════════════════════════════
+//  LOGIN
+// ══════════════════════════════════════════════════════════════
+
+async function initLogin() {
+  try {
+    // Try API first
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      const res = await apiGet('getMembers');
+      members = res.data || [];
+    }
+  } catch (err) {
+    console.warn('API unavailable, using demo data');
+  }
+
+  // Fallback demo data
+  if (members.length === 0) {
+    members = [
+      { id: 'M001', name: 'Trung Béo', role: 'admin', status: 'active' },
+      { id: 'M002', name: 'Hoàng BD', role: 'member', status: 'active' },
+      { id: 'M003', name: 'Hoàng', role: 'member', status: 'active' },
+      { id: 'M004', name: 'Huyền', role: 'member', status: 'active' },
+      { id: 'M005', name: 'Oanh', role: 'member', status: 'active' },
+      { id: 'M006', name: 'Hà', role: 'member', status: 'active' },
+    ];
+  }
+
+  renderLoginGrid();
+}
+
+function renderLoginGrid() {
+  const grid = document.getElementById('loginGrid');
+  let html = '';
+
+  members.forEach(m => {
+    const cls = m.role === 'admin' ? 'admin' : 'member';
+    html += `<button class="login-btn ${cls}" onclick="handleLogin('${m.name}')">${m.name}</button>`;
+  });
+
+  html += `<button class="login-btn guest-btn" onclick="handleAddGuest()">Không có tên tôi — liên hệ Admin</button>`;
+  grid.innerHTML = html;
+}
+
+function handleLogin(name) {
+  const member = members.find(m => m.name === name);
+  if (!member) return;
+
+  // Everyone needs PIN
+  pendingAdminAction = () => {
+    currentUser = { name: member.name, role: member.role };
+    localStorage.setItem('pb_user', JSON.stringify(currentUser));
+    // Save login timestamp for session persistence
+    localStorage.setItem('pb_login_ts', Date.now().toString());
+    showApp();
+  };
+  loginPinRole = member.role; // track which PIN to check
+  openPinModal();
+}
+
+let loginPinRole = 'member';
+
+// ── PIN Auth ─────────────────────────────────────────────────
+
+function openPinModal(name) {
+  openModal('modal-pin');
+  document.getElementById('pinError').style.display = 'none';
+  document.getElementById('pinModalTitle').textContent = '🔒 Nhập mã PIN';
+  document.getElementById('pinModalDesc').textContent = loginPinRole === 'admin'
+    ? 'Nhập mã PIN Admin để đăng nhập'
+    : 'Nhập mã PIN Member để đăng nhập';
+  const digits = document.querySelectorAll('#modal-pin .pin-digit');
+  digits.forEach(d => d.value = '');
+  setTimeout(() => digits[0].focus(), 300);
+}
+
+function pinNext(input, idx) {
+  if (input.value.length === 1) {
+    const digits = document.querySelectorAll('#modal-pin .pin-digit');
+    if (idx < 3) digits[idx + 1].focus();
+    else verifyPin();
+  }
+}
+
+function verifyPin() {
+  const digits = document.querySelectorAll('#modal-pin .pin-digit');
+  const pin = Array.from(digits).map(d => d.value).join('');
+  const correctPin = loginPinRole === 'admin' ? ADMIN_PIN : MEMBER_PIN;
+  if (pin === correctPin) {
+    closeModal('modal-pin');
+    if (pendingAdminAction) {
+      pendingAdminAction();
+      pendingAdminAction = null;
+    }
+  } else {
+    document.getElementById('pinError').style.display = 'block';
+    digits.forEach(d => d.value = '');
+    digits[0].focus();
+  }
+}
+
+function requireAdmin(callback) {
+  if (currentUser.role !== 'admin') {
+    showToast('Chỉ Admin mới dùng được!', 'error');
+    return;
+  }
+  callback();
+}
+
+async function handleAddGuest() {
+  const name = prompt('Nhập tên thành viên mới (chỉ Admin thêm được):');
+  if (!name || !name.trim()) return;
+
+  const trimmed = name.trim();
+  if (members.find(m => m.name === trimmed)) {
+    showToast('Tên đã tồn tại, hãy chọn từ danh sách!', 'error');
+    return;
+  }
+
+  try {
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      await apiPost('addGuest', { name: trimmed });
+    }
+    members.push({ id: 'G' + Date.now(), name: trimmed, role: 'member', status: 'guest' });
+    renderLoginGrid();
+    showToast('Đã thêm ' + trimmed + '! Tap tên để vào.', 'success');
+  } catch (err) {
+    showToast('Lỗi: ' + err.message, 'error');
+  }
+}
+
+function showApp() {
+  document.getElementById('screen-login').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+
+  // Header
+  document.getElementById('headerDate').textContent = formatDateVN(todayStr());
+  document.getElementById('headerUser').innerHTML =
+    `<span>${currentUser.name}</span>` +
+    `<span class="role-badge">${currentUser.role}</span>`;
+
+  // Show/hide admin tab in nav
+  const adminNav = document.querySelector('.admin-only-nav');
+  if (adminNav) {
+    adminNav.style.display = currentUser.role === 'admin' ? 'flex' : 'none';
+  }
+
+  // Rebind nav events (needed after showing admin tab)
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.onclick = () => {
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(tab).classList.add('active');
+      if (tab === 'tab-leaderboard') loadLeaderboard();
+      if (tab === 'tab-fund') loadFund();
+      if (tab === 'tab-admin') loadAdminPanel();
+    };
+  });
+
+  // Load today data
+  loadToday();
+
+  // Load quy chế for all users
+  loadQuyChe();
+
+  // Pre-load admin panel if admin
+  if (currentUser.role === 'admin') {
+    loadAdminPanel();
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  TAB: HÔM NAY
+// ══════════════════════════════════════════════════════════════
+
+async function loadToday() {
+  renderSessionCard(0, 0);
+
+  // Load today's matches from localStorage history
+  const today = todayStr();
+  const allSaved = JSON.parse(localStorage.getItem('pb_all_matches') || '[]');
+  todayMatches = allSaved.filter(m => m.session_date === today);
+
+  try {
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      const res = await apiGet('getMatches', { filter: 'today' });
+      todayMatches = res.data || [];
+    }
+  } catch (err) {
+    console.warn('Could not load matches from API');
+  }
+
+  // Auto-clear guests from previous days
+  const lastGuestDate = localStorage.getItem('pb_guest_date');
+  if (lastGuestDate !== today) {
+    guests = [];
+    localStorage.setItem('pb_guest_date', today);
+  }
+
+  renderTodayMatches();
+  renderAttendance();
+}
+
+function renderSessionCard(matchCount, attendCount) {
+  const today = todayStr();
+  document.getElementById('sessionCard').innerHTML = `
+    <div class="session-card">
+      <div class="session-header">
+        <div class="session-date">${formatDateVN(today)}</div>
+        <div class="session-status">● Buổi đang diễn ra</div>
+      </div>
+      <div class="session-stats">
+        <div>
+          <div class="session-stat-label">Quỹ buổi</div>
+          <div class="session-stat-value">0</div>
+        </div>
+        <div>
+          <div class="session-stat-label">Trận</div>
+          <div class="session-stat-value">${matchCount}</div>
+        </div>
+        <div>
+          <div class="session-stat-label">Có mặt</div>
+          <div class="session-stat-value">${attendCount}<small>/${members.length}</small></div>
+        </div>
+      </div>
+      <div class="session-actions">
+        <button class="btn btn-primary" onclick="openRecordMatch()">+ Ghi trận mới</button>
+        <button class="btn btn-secondary" onclick="generateRecap()">💬 Recap</button>
+      </div>
+    </div>
+  `;
+}
+
+let guests = []; // Khách mời hôm nay (không thống kê)
+
+function renderAttendance() {
+  const section = document.getElementById('attendanceSection');
+  const totalPresent = attendance.length + guests.filter(g => attendance.includes(g)).length;
+  html = `<div class="section-label">Có mặt · ${attendance.length}/${members.length}${guests.length > 0 ? ' + ' + guests.length + ' khách' : ''}</div>`;
+  html += '<div class="attendance-row">';
+  members.forEach(m => {
+    const active = attendance.includes(m.name) ? 'active' : '';
+    html += `<span class="chip ${active}" onclick="toggleAttendance('${m.name}')">${m.name}</span>`;
+  });
+  guests.forEach(g => {
+    html += `<span class="chip active" style="background:#fef3c7;border-color:#f59e0b;color:#92400e" onclick="removeGuest('${g}')">${g} (khách) ✕</span>`;
+  });
+  html += `<span class="chip chip-add" onclick="addSessionGuest()">+ Khách mời</span>`;
+  html += '</div>';
+  section.innerHTML = html;
+}
+
+function addSessionGuest() {
+  const name = prompt('Tên khách mời:');
+  if (!name || !name.trim()) return;
+  const trimmed = name.trim();
+  if (guests.includes(trimmed) || members.find(m => m.name === trimmed)) {
+    showToast('Tên đã có trong danh sách!', 'error');
+    return;
+  }
+  guests.push(trimmed);
+  renderAttendance();
+  renderMatchForm && typeof renderMatchForm === 'function' && document.getElementById('modal-match').classList.contains('open') && renderMatchForm();
+  showToast('Đã thêm khách mời: ' + trimmed, 'success');
+}
+
+function removeGuest(name) {
+  guests = guests.filter(g => g !== name);
+  renderAttendance();
+}
+
+function toggleAttendance(name) {
+  const idx = attendance.indexOf(name);
+  if (idx >= 0) attendance.splice(idx, 1);
+  else attendance.push(name);
+
+  renderAttendance();
+  renderSessionCard(todayMatches.length, attendance.length);
+
+  // Save to API (fire and forget)
+  if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+    apiPost('updateAttendance', { date: todayStr(), attendees: attendance, created_by: currentUser.name }).catch(() => {});
+  }
+}
+
+function renderTodayMatches() {
+  const container = document.getElementById('matchesList');
+  document.getElementById('matchCountLabel').textContent = `Trận hôm nay · ${todayMatches.length}`;
+
+  // Get all saved matches for history
+  const allSaved = JSON.parse(localStorage.getItem('pb_all_matches') || '[]');
+  const today = todayStr();
+
+  // Combine: today's live matches + saved history (excluding today to avoid dupes)
+  const historyOther = allSaved.filter(m => m.session_date !== today);
+
+  // Group history by date
+  const byDate = {};
+  historyOther.forEach(m => {
+    const d = m.session_date || 'unknown';
+    if (!byDate[d]) byDate[d] = [];
+    byDate[d].push(m);
+  });
+
+  let html = '';
+
+  // Today's matches
+  if (todayMatches.length === 0) {
+    html += `
+      <div class="empty-state">
+        <div class="empty-state-icon">🥒</div>
+        <div class="empty-state-text">Chưa có trận nào trong buổi</div>
+      </div>
+    `;
+  } else {
+    todayMatches.forEach(m => {
+      html += renderMatchCard(m, true);
+    });
+  }
+
+  // Past matches (by date, newest first)
+  const pastDates = Object.keys(byDate).sort().reverse();
+  if (pastDates.length > 0) {
+    html += `<div class="section-label" style="margin-top:24px">Lịch sử trận đấu</div>`;
+    pastDates.forEach(date => {
+      html += `<div style="font-size:13px;font-weight:600;color:var(--text-secondary);margin:12px 0 6px;padding:4px 0;border-bottom:1px solid var(--border)">${formatDateVN(date)} · ${byDate[date].length} trận</div>`;
+      byDate[date].forEach(m => {
+        html += renderMatchCard(m, false); // false = not deletable
+      });
+    });
+  }
+
+  container.innerHTML = html;
+  renderSessionCard(todayMatches.length, attendance.length);
+}
+
+function renderMatchCard(m, canDelete) {
+  const teamA = Array.isArray(m.team_a) ? m.team_a : JSON.parse(m.team_a || '[]');
+  const teamB = Array.isArray(m.team_b) ? m.team_b : JSON.parse(m.team_b || '[]');
+  const scores = Array.isArray(m.scores) ? m.scores : JSON.parse(m.scores || '[]');
+  const isWinA = m.winner === 'team_a';
+
+  let scoresHtml = scores.map(s => {
+    const wonA = s.a > s.b;
+    return `<span class="match-set ${wonA ? 'won' : 'lost'}">${s.a}-${s.b}</span>`;
+  }).join('');
+
+  const deleteBtn = (canDelete && currentUser.role === 'admin')
+    ? `<button class="match-delete" onclick="deleteMatch('${m.match_id}')" title="Xóa trận">🗑</button>`
+    : '';
+
+  const betLabel = m.bet_amount > 0 ? '· 🎰 ' + formatShort(m.bet_amount) + '/người' : '';
+
+  return `
+    <div class="match-card">
+      ${deleteBtn}
+      <div class="match-type">${m.type === 'doubles' ? 'Đôi' : 'Đơn'} ${betLabel}</div>
+      <div class="match-teams">
+        <div class="match-team ${isWinA ? 'winner' : ''}">
+          <div class="match-team-names">${teamA.join(' & ')}</div>
+        </div>
+        <div class="match-vs">vs</div>
+        <div class="match-team ${!isWinA ? 'winner' : ''}">
+          <div class="match-team-names">${teamB.join(' & ')}</div>
+        </div>
+      </div>
+      <div class="match-scores">${scoresHtml}</div>
+    </div>
+  `;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RECORD MATCH
+// ══════════════════════════════════════════════════════════════
+
+function openRecordMatch() {
+  matchForm = {
+    type: 'doubles',
+    teamA: [],
+    teamB: [],
+    bestOf: 1,
+    winner: null,
+    selectingFor: 'a'
+  };
+
+  // Reset UI
+  document.querySelectorAll('#modal-match .toggle-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('#modal-match .toggle-btn[onclick*="doubles"]').classList.add('active');
+  document.querySelector('#modal-match .toggle-btn[onclick*="setBestOf(1)"]').classList.add('active');
+  const betInput = document.getElementById('betAmount');
+  betInput.value = '0';
+  betInput.dataset.rawValue = '0';
+
+  renderMatchForm();
+  openModal('modal-match');
+}
+
+function setMatchType(type) {
+  matchForm.type = type;
+  matchForm.teamA = [];
+  matchForm.teamB = [];
+  matchForm.winner = null;
+
+  document.querySelectorAll('#modal-match .form-group:first-child .toggle-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`#modal-match .toggle-btn[onclick*="${type}"]`).classList.add('active');
+
+  renderMatchForm();
+}
+
+function setBestOf(n) {
+  matchForm.bestOf = n;
+  document.querySelectorAll('#modal-match .toggle-group')[1].querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`#modal-match .toggle-btn[onclick*="setBestOf(${n})"]`).classList.add('active');
+  renderScoreSets();
+}
+
+function setWinner(w) {
+  matchForm.winner = w;
+  document.querySelectorAll('.winner-btn').forEach(b => b.classList.remove('selected'));
+  document.querySelector(`.winner-btn[onclick*="${w}"]`).classList.add('selected');
+}
+
+function renderMatchForm() {
+  const maxPerTeam = matchForm.type === 'doubles' ? 2 : 1;
+
+  // Render slots
+  ['A', 'B'].forEach(side => {
+    const container = document.getElementById('slots' + side);
+    const team = side === 'A' ? matchForm.teamA : matchForm.teamB;
+    let html = '';
+    for (let i = 0; i < maxPerTeam; i++) {
+      if (team[i]) {
+        html += `<div class="player-slot filled" onclick="removePlayer('${side.toLowerCase()}', ${i})">${team[i]} ✕</div>`;
+      } else {
+        html += `<div class="player-slot" onclick="startSelectPlayer('${side.toLowerCase()}')">+ Chọn</div>`;
+      }
+    }
+    container.innerHTML = html;
+  });
+
+  // Render player picker
+  const allSelected = [...matchForm.teamA, ...matchForm.teamB];
+  const picker = document.getElementById('playerPicker');
+  // Use attendance list if available, otherwise all members
+  const availablePlayers = attendance.length > 0 ? members.filter(m => attendance.includes(m.name)) : members;
+  // Add guests to picker
+  const allPlayers = [...availablePlayers.map(m => m.name), ...guests];
+
+  picker.innerHTML = allPlayers.map(name => {
+    const selected = allSelected.includes(name) ? 'selected' : '';
+    const disabled = allSelected.includes(name) ? 'disabled' : '';
+    const isGuest = guests.includes(name);
+    const label = isGuest ? name + ' 🏷' : name;
+    return `<button class="player-pick-btn ${selected} ${disabled}" onclick="pickPlayer('${name}')">${label}</button>`;
+  }).join('');
+
+  // Update winner buttons
+  const wA = matchForm.teamA.join(' & ') || 'Team A';
+  const wB = matchForm.teamB.join(' & ') || 'Team B';
+  document.getElementById('winnerSelect').innerHTML = `
+    <button class="winner-btn ${matchForm.winner === 'team_a' ? 'selected' : ''}" onclick="setWinner('team_a')">🏆 ${wA}</button>
+    <button class="winner-btn ${matchForm.winner === 'team_b' ? 'selected' : ''}" onclick="setWinner('team_b')">🏆 ${wB}</button>
+  `;
+
+  renderScoreSets();
+}
+
+function startSelectPlayer(side) {
+  matchForm.selectingFor = side;
+}
+
+function pickPlayer(name) {
+  const maxPerTeam = matchForm.type === 'doubles' ? 2 : 1;
+  const allSelected = [...matchForm.teamA, ...matchForm.teamB];
+  if (allSelected.includes(name)) return;
+
+  // Try to fill team A first, then B
+  if (matchForm.teamA.length < maxPerTeam) {
+    matchForm.teamA.push(name);
+  } else if (matchForm.teamB.length < maxPerTeam) {
+    matchForm.teamB.push(name);
+  }
+
+  renderMatchForm();
+}
+
+function removePlayer(side, idx) {
+  if (side === 'a') matchForm.teamA.splice(idx, 1);
+  else matchForm.teamB.splice(idx, 1);
+  renderMatchForm();
+}
+
+function renderScoreSets() {
+  const container = document.getElementById('scoreSets');
+  let html = '<label class="form-label">Tỷ số từng set</label>';
+
+  for (let i = 0; i < matchForm.bestOf; i++) {
+    html += `
+      <div class="score-set-row">
+        <span class="score-set-label">Set ${i + 1}</span>
+        <div class="score-input-group">
+          <input type="number" class="score-input" id="scoreA${i}" min="0" max="99" placeholder="0">
+          <span class="score-dash">—</span>
+          <input type="number" class="score-input" id="scoreB${i}" min="0" max="99" placeholder="0">
+        </div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+}
+
+async function submitMatch() {
+  const maxPerTeam = matchForm.type === 'doubles' ? 2 : 1;
+
+  // Validate
+  if (matchForm.teamA.length < maxPerTeam || matchForm.teamB.length < maxPerTeam) {
+    showToast('Chưa chọn đủ người chơi!', 'error');
+    return;
+  }
+
+  if (!matchForm.winner) {
+    showToast('Chưa chọn đội thắng!', 'error');
+    return;
+  }
+
+  // Collect scores
+  const scores = [];
+  for (let i = 0; i < matchForm.bestOf; i++) {
+    const a = parseInt(document.getElementById('scoreA' + i).value) || 0;
+    const b = parseInt(document.getElementById('scoreB' + i).value) || 0;
+    if (a === 0 && b === 0 && i > 0) continue; // Skip empty optional sets
+    scores.push({ a, b });
+  }
+
+  if (scores.length === 0) {
+    showToast('Chưa nhập tỷ số!', 'error');
+    return;
+  }
+
+  const betAmount = getMoneyInputValue(document.getElementById('betAmount'));
+  const btn = document.getElementById('submitMatchBtn');
+  btn.disabled = true;
+  btn.textContent = 'Đang ghi...';
+
+  const matchData = {
+    type: matchForm.type,
+    team_a: matchForm.teamA,
+    team_b: matchForm.teamB,
+    scores: scores,
+    winner: matchForm.winner,
+    best_of: matchForm.bestOf,
+    bet_amount: betAmount,
+    session_date: todayStr(),
+    recorded_by: currentUser.name
+  };
+
+  try {
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      const res = await apiPost('recordMatch', matchData);
+      matchData.match_id = res.matchId;
+    } else {
+      matchData.match_id = 'MT_' + Date.now();
+    }
+
+    todayMatches.push(matchData);
+    // Save to localStorage for history
+    saveMatchToHistory(matchData);
+
+    // Auto-create fund transactions for losers if bet > 0
+    if (betAmount > 0) {
+      const losers = matchData.winner === 'team_a' ? matchData.team_b : matchData.team_a;
+      losers.forEach(name => {
+        // Don't create fund entries for guests
+        if (!guests.includes(name)) {
+          addFundTransaction({
+            tx_id: 'TX' + Date.now() + '_' + name.replace(/\s/g, ''),
+            date: todayStr(),
+            member: name,
+            amount: betAmount,
+            type: 'match_fee',
+            status: 'pending',
+            match_id: matchData.match_id,
+            note: 'Thua độ trận'
+          });
+        }
+      });
+    }
+
+    renderTodayMatches();
+    closeModal('modal-match');
+    showToast('Đã ghi trận thành công!' + (betAmount > 0 ? ' Đội thua nợ ' + formatShort(betAmount) + '/người.' : ''), 'success');
+  } catch (err) {
+    showToast('Lỗi: ' + err.message, 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Ghi trận';
+  }
+}
+
+async function deleteMatch(matchId) {
+  if (currentUser.role !== 'admin') return;
+  if (!confirm('Xóa trận này? Chỉ xóa được trận hôm nay.')) return;
+
+  try {
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      await apiPost('deleteMatch', { match_id: matchId, admin_name: currentUser.name });
+    }
+    todayMatches = todayMatches.filter(m => m.match_id !== matchId);
+    // Also remove from localStorage history
+    removeMatchFromHistory(matchId);
+    renderTodayMatches();
+    showToast('Đã xóa trận', 'success');
+  } catch (err) {
+    showToast('Lỗi: ' + err.message, 'error');
+  }
+}
+
+function saveMatchToHistory(match) {
+  const all = JSON.parse(localStorage.getItem('pb_all_matches') || '[]');
+  all.push(match);
+  localStorage.setItem('pb_all_matches', JSON.stringify(all));
+}
+
+function removeMatchFromHistory(matchId) {
+  let all = JSON.parse(localStorage.getItem('pb_all_matches') || '[]');
+  all = all.filter(m => m.match_id !== matchId);
+  localStorage.setItem('pb_all_matches', JSON.stringify(all));
+}
+
+// ══════════════════════════════════════════════════════════════
+//  RECAP
+// ══════════════════════════════════════════════════════════════
+
+function generateRecap() {
+  if (todayMatches.length === 0) {
+    showToast('Chưa có trận nào để recap!', 'error');
+    return;
+  }
+
+  let text = '🥒 30SHINE PICKLEBALL CLUB\n';
+  text += '📅 ' + formatDateVN(todayStr()) + ' · ' + todayMatches.length + ' trận\n';
+  text += '─────────────────\n';
+
+  todayMatches.forEach((m, i) => {
+    const teamA = Array.isArray(m.team_a) ? m.team_a : [];
+    const teamB = Array.isArray(m.team_b) ? m.team_b : [];
+    const scores = Array.isArray(m.scores) ? m.scores : [];
+    const scoreStr = scores.map(s => s.a + '-' + s.b).join(', ');
+    const isWinA = m.winner === 'team_a';
+
+    text += '\n' + (i + 1) + '. ' + (m.type === 'doubles' ? 'Đôi' : 'Đơn') + '\n';
+    text += (isWinA ? '🏆 ' : '   ') + teamA.join(' & ') + '\n';
+    text += '   vs\n';
+    text += (!isWinA ? '🏆 ' : '   ') + teamB.join(' & ') + '\n';
+    text += '   📊 ' + scoreStr + '\n';
+  });
+
+  text += '\n─────────────────\n';
+  text += '💪 Hẹn buổi sau anh em!\n';
+
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Đã copy recap! Paste vào Zalo nhé 📋', 'success');
+  }).catch(() => {
+    // Fallback
+    prompt('Copy text này:', text);
+  });
+}
+
+// ══════════════════════════════════════════════════════════════
+//  TAB: BẢNG VÀNG
+// ══════════════════════════════════════════════════════════════
+
+async function loadLeaderboard(period) {
+  period = period || 'month';
+
+  const podium = document.getElementById('podiumSection');
+  const ranking = document.getElementById('rankingList');
+  const badges = document.getElementById('badgesSection');
+
+  podium.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+  try {
+    let leaderboard, badgesData;
+
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      const [lbRes, bgRes] = await Promise.all([
+        apiGet('getLeaderboard', { period }),
+        apiGet('getBadges', { period })
+      ]);
+      leaderboard = lbRes.data || [];
+      badgesData = bgRes.data || [];
+    } else {
+      // Demo data
+      leaderboard = generateDemoLeaderboard();
+      badgesData = generateDemoBadges();
+    }
+
+    renderPodium(leaderboard.slice(0, 3), podium);
+    renderRanking(leaderboard, ranking);
+    renderBadges(badgesData, badges);
+  } catch (err) {
+    podium.innerHTML = '<div class="empty-state"><div class="empty-state-text">Không thể tải dữ liệu</div></div>';
+  }
+}
+
+function renderPodium(top3, container) {
+  if (top3.length === 0) {
+    container.innerHTML = '<div class="empty-state"><div class="empty-state-icon">🏆</div><div class="empty-state-text">Chưa có dữ liệu</div></div>';
+    return;
+  }
+
+  // Reorder: #2, #1, #3
+  const order = [top3[1], top3[0], top3[2]].filter(Boolean);
+  const classes = ['silver', 'gold', 'bronze'];
+  const ranks = [2, 1, 3];
+
+  let html = '<div class="podium">';
+  order.forEach((p, i) => {
+    if (!p) return;
+    html += `
+      <div class="podium-item ${classes[i]}">
+        <div class="podium-rank">#${ranks[i]}</div>
+        <div class="podium-name">${p.name}</div>
+        <div class="podium-stat">${p.wins}W - ${p.losses}L<br>${p.winRate}% win</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderRanking(players, container) {
+  if (players.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  let html = '<div class="section-label" style="margin-top:8px">Bảng xếp hạng</div>';
+  players.forEach((p, i) => {
+    const rateClass = p.winRate >= 50 ? 'win-rate' : 'lose-rate';
+    html += `
+      <div class="rank-row">
+        <div class="rank-num">${String(i + 1).padStart(2, '0')}</div>
+        <div class="rank-info">
+          <div class="rank-name">${p.name}</div>
+          <div class="rank-stats">${p.wins} thắng · ${p.losses} thua · <span class="${rateClass}">${p.winRate}% win</span></div>
+        </div>
+        <div class="rank-total">${p.matches} trận</div>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+function renderBadges(badgesData, container) {
+  if (!badgesData || badgesData.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  let html = '<div class="section-label">Danh hiệu</div>';
+  html += '<div class="badge-grid">';
+  badgesData.forEach(b => {
+    html += `
+      <div class="badge-card">
+        <div class="badge-icon">${b.icon}</div>
+        <div class="badge-label">${b.label}</div>
+        <div class="badge-player">${b.player}</div>
+        <div class="badge-value">${b.value}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+// ══════════════════════════════════════════════════════════════
+//  TAB: QUỸ
+// ══════════════════════════════════════════════════════════════
+
+async function loadFund() {
+  const balanceCard = document.getElementById('fundBalanceCard');
+  balanceCard.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+  try {
+    let fundData;
+
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      fundData = await apiGet('getFund');
+    } else {
+      // Use localStorage-backed fund data
+      const txs = getFundTransactions();
+      fundData = calcFundTotals(txs);
+    }
+
+    // Add initial fund balance
+    fundData.balance += fundInitBalance;
+    fundData.totalIn += fundInitBalance;
+    renderFundBalance(fundData, balanceCard);
+    renderBankInfo();
+    renderFundPending(fundData.pending || []);
+    renderIncomeHistory(fundData.all || []);
+    renderExpenseHistory(fundData.all || []);
+    renderAuditLog();
+  } catch (err) {
+    balanceCard.innerHTML = '<div class="empty-state"><div class="empty-state-text">Không thể tải dữ liệu quỹ</div></div>';
+  }
+}
+
+function renderFundBalance(data, container) {
+  container.innerHTML = `
+    <div class="fund-balance-card">
+      <div class="fund-label">Số dư hiện tại</div>
+      <div class="fund-amount">${formatVND(data.balance)}</div>
+      <div class="fund-split">
+        <div class="fund-split-item">
+          <div class="fund-split-label">↗ Đã thu</div>
+          <div class="fund-split-value income">${formatShort(data.totalIn)}</div>
+        </div>
+        <div class="fund-split-item">
+          <div class="fund-split-label">↘ Đã chi</div>
+          <div class="fund-split-value expense">${formatShort(data.totalOut)}</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <button class="btn btn-outline btn-full" onclick="openPaymentModal()">💳 Báo đã CK</button>
+      ${currentUser.role === 'admin' ? '<button class="btn btn-outline btn-full" onclick="requireAdmin(addExpense)">📝 Ghi chi (Admin)</button>' : ''}
+    </div>
+  `;
+}
+
+function renderBankInfo() {
+  const bankName = config.bank_name || 'MB Bank';
+  const bankAccount = config.bank_account || '5000199991996';
+  const accountHolder = config.account_holder || 'NGUYEN THANH TRUNG';
+  const qrUrl = `https://img.vietqr.io/image/MB-${bankAccount}-compact2.png?addInfo=${encodeURIComponent('30Shine Pickle')}&accountName=${encodeURIComponent(accountHolder)}`;
+
+  document.getElementById('bankInfo').innerHTML = `
+    <div class="bank-card">
+      <div class="bank-card-header">🏦 TK nhận đóng góp</div>
+      <div style="font-size:13px;color:var(--text-secondary);margin-bottom:4px">${bankName}</div>
+      <div class="bank-number">${bankAccount}</div>
+      <div class="bank-name">${accountHolder}</div>
+      <img src="${qrUrl}" alt="QR chuyển khoản" class="qr-image" onerror="this.style.display='none'">
+      <div class="bank-note">📝 Ghi tên + ngày buổi khi chuyển khoản</div>
+    </div>
+  `;
+}
+
+function renderFundPending(pending) {
+  const container = document.getElementById('fundPending');
+  if (pending.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  const isAdmin = currentUser.role === 'admin';
+
+  // Split into 2 groups
+  const bettingDebts = pending.filter(t => t.type === 'match_fee');
+  const transfers = pending.filter(t => t.type !== 'match_fee');
+
+  let html = '';
+
+  // ── Luồng 1: Thua độ ──
+  if (bettingDebts.length > 0) {
+    html += `<div class="section-label" style="margin-top:16px">🎰 Thua độ · chờ xác nhận · ${bettingDebts.length}</div>`;
+    bettingDebts.forEach(tx => {
+      const adminBtn = isAdmin
+        ? `<button class="btn btn-sm" style="margin-top:4px;background:var(--green-light);color:#fff" onclick="confirmPayment('${tx.tx_id}')">✓ Đã xong</button>`
+        : '';
+
+      html += `
+        <div class="tx-card">
+          <div class="tx-info">
+            <div class="tx-name">${tx.member}</div>
+            <div class="tx-detail">Độ trận · ${tx.note || ''} · ${tx.date}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="tx-amount pending">${formatVND(tx.amount)}</div>
+            <span class="tx-status pending">Chưa xong</span>
+            ${adminBtn}
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  // ── Luồng 2: Chuyển tiền (nộp quỹ / donate) ──
+  if (transfers.length > 0) {
+    html += `<div class="section-label" style="margin-top:20px">💳 Chuyển khoản · chờ xác nhận · ${transfers.length}</div>`;
+    transfers.forEach(tx => {
+      const typeLabel = tx.type === 'donation' ? 'Nộp Quỹ' : tx.type;
+      const statusLabel = tx.status === 'reported'
+        ? '<span class="tx-status reported">Đã báo CK</span>'
+        : '<span class="tx-status pending">Chưa CK</span>';
+
+      const adminBtn = isAdmin
+        ? `<button class="btn btn-sm btn-primary" style="margin-top:4px" onclick="confirmPayment('${tx.tx_id}')">✓ Đã nhận</button>`
+        : '';
+
+      html += `
+        <div class="tx-card">
+          <div class="tx-info">
+            <div class="tx-name">${tx.member}</div>
+            <div class="tx-detail">${typeLabel} · ${tx.note || ''} · ${tx.date}</div>
+          </div>
+          <div style="text-align:right">
+            <div class="tx-amount pending">${formatVND(tx.amount)}</div>
+            ${statusLabel}
+            ${adminBtn}
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  container.innerHTML = html;
+}
+
+function renderIncomeHistory(all) {
+  const container = document.getElementById('fundIncomeHistory');
+  const isAdmin = currentUser.role === 'admin';
+
+  // Thu = chỉ donation/CK đã xác nhận (ảnh hưởng quỹ)
+  const income = all.filter(t => t.type === 'donation' && t.status === 'confirmed');
+  // Độ đã xong = match_fee confirmed (KHÔNG ảnh hưởng quỹ, chỉ tracking)
+  const bettingDone = all.filter(t => t.type === 'match_fee' && t.status === 'confirmed');
+
+  let html = '';
+
+  // Lịch sử thu (ảnh hưởng quỹ)
+  if (income.length > 0) {
+    html += `<div class="section-label" style="margin-top:16px">💰 Đã thu vào quỹ · ${income.length}</div>`;
+    income.slice(-20).reverse().forEach(tx => {
+      const undoBtn = isAdmin
+        ? `<button class="icon-btn danger" onclick="undoConfirm('${tx.tx_id}')" title="Hoàn tác" style="width:24px;height:24px;font-size:12px;margin-left:6px">↩</button>`
+        : '';
+      html += `
+        <div class="tx-card">
+          <div class="tx-info">
+            <div class="tx-name">${tx.member}</div>
+            <div class="tx-detail">Nộp Quỹ · ${tx.note || ''} · ${tx.date}</div>
+          </div>
+          <div style="display:flex;align-items:center">
+            <div class="tx-amount confirmed">+${formatVND(tx.amount)}</div>
+            ${undoBtn}
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  // Độ đã xong (chỉ tracking, không ảnh hưởng quỹ)
+  if (bettingDone.length > 0) {
+    html += `<div class="section-label" style="margin-top:16px">🎰 Độ đã xong · ${bettingDone.length} <span style="font-weight:400;text-transform:none;letter-spacing:0">(không tính vào quỹ)</span></div>`;
+    bettingDone.slice(-20).reverse().forEach(tx => {
+      const undoBtn = isAdmin
+        ? `<button class="icon-btn danger" onclick="undoConfirm('${tx.tx_id}')" title="Hoàn tác" style="width:24px;height:24px;font-size:12px;margin-left:6px">↩</button>`
+        : '';
+      html += `
+        <div class="tx-card" style="opacity:0.8">
+          <div class="tx-info">
+            <div class="tx-name">${tx.member}</div>
+            <div class="tx-detail">Độ trận · ${tx.note || ''} · ${tx.date}</div>
+          </div>
+          <div style="display:flex;align-items:center">
+            <span class="tx-status confirmed">✓ Đã xong</span>
+            ${undoBtn}
+          </div>
+        </div>
+      `;
+    });
+  }
+
+  container.innerHTML = html;
+}
+
+function renderExpenseHistory(all) {
+  const container = document.getElementById('fundExpenseHistory');
+  const expenses = all.filter(t => t.type === 'expense');
+  if (expenses.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  let html = `<div class="fund-section">
+    <div class="section-label" style="margin-top:16px">Lịch sử chi · ${expenses.length}</div>`;
+  expenses.slice(-20).reverse().forEach(tx => {
+    html += `
+      <div class="tx-card">
+        <div class="tx-info">
+          <div class="tx-name">${tx.member}</div>
+          <div class="tx-detail">${tx.note || 'Chi tiêu'} · ${tx.date}</div>
+        </div>
+        <div class="tx-amount pending">-${formatVND(tx.amount)}</div>
+      </div>
+    `;
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderAuditLog() {
+  const container = document.getElementById('fundAuditLog');
+  const logs = getAuditLogs();
+  if (logs.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  let html = `<div class="section-label" style="margin-top:20px">📋 Nhật ký thay đổi (minh bạch)</div>`;
+  logs.slice(-30).reverse().forEach(log => {
+    const time = new Date(log.ts);
+    const timeStr = time.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
+    html += `
+      <div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:13px">
+        <span style="color:var(--text-secondary)">${log.date} ${timeStr}</span> ·
+        <b>${log.who}</b> — ${log.detail}
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+function openPaymentModal() {
+  document.getElementById('payAmount').value = '';
+  document.getElementById('payNote').value = '';
+  openModal('modal-payment');
+}
+
+function setPayType(type) {
+  payType = type;
+  document.querySelectorAll('#modal-payment .toggle-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`#modal-payment .toggle-btn[onclick*="${type}"]`).classList.add('active');
+}
+
+async function submitPayment() {
+  const amount = getMoneyInputValue(document.getElementById('payAmount'));
+  const note = document.getElementById('payNote').value;
+
+  if (!amount || amount <= 0) {
+    showToast('Nhập số tiền!', 'error');
+    return;
+  }
+
+  try {
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      await apiPost('reportPayment', { member: currentUser.name, amount, type: payType, note });
+    }
+
+    // Save to localStorage
+    addFundTransaction({
+      tx_id: 'TX' + Date.now(),
+      date: todayStr(),
+      member: currentUser.name,
+      amount,
+      type: payType,
+      status: 'reported',
+      match_id: '',
+      note: note || (payType === 'donation' ? 'Nộp Quỹ' : 'Phí thua trận')
+    });
+
+    closeModal('modal-payment');
+    showToast('Đã báo nộp! Chờ admin xác nhận.', 'success');
+    loadFund();
+  } catch (err) {
+    showToast('Lỗi: ' + err.message, 'error');
+  }
+}
+
+async function confirmPayment(txId) {
+  if (currentUser.role !== 'admin') return;
+
+  try {
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      await apiPost('confirmPayment', { tx_id: txId, admin_name: currentUser.name });
+    }
+
+    // Update in localStorage
+    const tx = updateFundTransaction(txId, {
+      status: 'confirmed',
+      confirmed_by: currentUser.name,
+      confirmed_at: new Date().toISOString()
+    });
+
+    const label = tx && tx.type === 'match_fee'
+      ? `Xác nhận độ trận: ${tx.member} ${formatVND(tx.amount)}`
+      : `Xác nhận đã nhận: ${tx ? tx.member : ''} ${tx ? formatVND(tx.amount) : ''}`;
+    addAuditLog('confirm', label, currentUser.name);
+    showToast('Đã xác nhận! Số dư quỹ đã cập nhật.', 'success');
+
+    // Reload to reflect changes
+    loadFund();
+  } catch (err) {
+    showToast('Lỗi: ' + err.message, 'error');
+  }
+}
+
+// Admin undo — hoàn tác xác nhận (ghi log)
+async function undoConfirm(txId) {
+  if (currentUser.role !== 'admin') return;
+  if (!confirm('Hoàn tác xác nhận giao dịch này? Sẽ chuyển về trạng thái chưa xong.')) return;
+
+  const tx = updateFundTransaction(txId, {
+    status: 'pending',
+    confirmed_by: '',
+    confirmed_at: ''
+  });
+
+  const label = tx
+    ? `Hoàn tác: ${tx.member} ${formatVND(tx.amount)} — chuyển về chưa xong`
+    : `Hoàn tác giao dịch ${txId}`;
+  addAuditLog('undo', label, currentUser.name);
+  showToast('Đã hoàn tác!', 'info');
+  loadFund();
+}
+
+async function addExpense() {
+  const note = prompt('Ghi chú chi tiêu:');
+  if (!note) return;
+  const amount = parseInt(prompt('Số tiền (VNĐ):'));
+  if (!amount || amount <= 0) return;
+
+  try {
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      await apiPost('reportPayment', {
+        member: currentUser.name,
+        amount,
+        type: 'expense',
+        note
+      });
+    }
+    showToast('Đã ghi chi!', 'success');
+    loadFund();
+  } catch (err) {
+    showToast('Lỗi: ' + err.message, 'error');
+  }
+}
+
+// ══════════════════════════════════════════════════════════════
+//  DEMO DATA (when API not connected)
+// ══════════════════════════════════════════════════════════════
+
+function generateDemoLeaderboard() {
+  return [
+    { name: 'Trung Béo', wins: 8, losses: 4, matches: 12, winRate: 67 },
+    { name: 'Hoàng BD', wins: 6, losses: 5, matches: 11, winRate: 55 },
+    { name: 'Hoàng', wins: 5, losses: 6, matches: 11, winRate: 45 },
+    { name: 'Huyền', wins: 4, losses: 3, matches: 7, winRate: 57 },
+    { name: 'Oanh', wins: 3, losses: 5, matches: 8, winRate: 38 },
+    { name: 'Hà', wins: 2, losses: 4, matches: 6, winRate: 33 },
+  ].sort((a, b) => b.wins - a.wins || b.winRate - a.winRate);
+}
+
+function generateDemoBadges() {
+  return [
+    { id: 'vua_tran', label: 'Vua trận', icon: '👑', player: 'Trung Béo', value: '12 trận' },
+    { id: 'dang_nong', label: 'Chuỗi Bất Bại', icon: '🔥', player: 'Huyền', value: '3 win liên tiếp' },
+    { id: 'cap_doi_vang', label: 'Cặp đôi vàng', icon: '💎', player: 'Trung Béo & Hoàng BD', value: 'Win 75% · 4 trận' },
+    { id: 'anh_em_ruot', label: 'Cạ Cứng', icon: '🤝', player: 'Hoàng & Huyền', value: '5 trận chung' },
+    { id: 'manh_thuong_quan', label: 'Mạnh thường quân', icon: '💵', player: 'Trung Béo', value: '500k' },
+    { id: 'khac_tinh', label: 'Khắc tinh', icon: '👿', player: 'Trung Béo → Hà', value: '4/5 trận thắng' },
+    { id: 'tuong_ga', label: 'Tướng gà', icon: '🐔', player: 'Hà', value: '4 thua' },
+    { id: 'dang_lanh', label: 'Chuỗi Thất Bại', icon: '🥶', player: 'Oanh', value: '3 thua liên tiếp' },
+  ];
+}
+
+// ══════════════════════════════════════════════════════════════
+//  TAB: ADMIN
+// ══════════════════════════════════════════════════════════════
+
+let fundInitBalance = parseInt(localStorage.getItem('pb_fund_init') || '0');
+
+function loadAdminPanel() {
+  if (currentUser.role !== 'admin') return;
+  renderFundInit();
+  renderMemberList();
+  renderAdminPending();
+  loadQuyChe();
+}
+
+// ── Tồn đầu quỹ ────────────────────────────────────────────
+
+function renderFundInit() {
+  document.getElementById('fundInitDisplay').innerHTML = `
+    <div class="fund-init-card">
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;opacity:0.8">Tồn đầu kỳ</div>
+      <div class="fund-init-amount">${formatVND(fundInitBalance)}</div>
+    </div>
+  `;
+}
+
+function setFundInit() {
+  const input = document.getElementById('fundInitInput');
+  const val = getMoneyInputValue(input);
+  if (val < 0) { showToast('Số tiền không hợp lệ!', 'error'); return; }
+  const oldVal = fundInitBalance;
+  fundInitBalance = val;
+  localStorage.setItem('pb_fund_init', val.toString());
+  // Log the change
+  addAuditLog('fund_init', `Cập nhật tồn đầu quỹ: ${formatVND(oldVal)} → ${formatVND(val)}`, currentUser.name);
+  renderFundInit();
+  input.value = '';
+  input.dataset.rawValue = '';
+  showToast('Đã cập nhật tồn đầu quỹ: ' + formatVND(val), 'success');
+}
+
+// ── Audit Log (nhật ký thay đổi — public) ───────────────────
+
+function addAuditLog(type, detail, who) {
+  const logs = JSON.parse(localStorage.getItem('pb_audit_log') || '[]');
+  logs.push({
+    ts: new Date().toISOString(),
+    date: todayStr(),
+    type,
+    detail,
+    who
+  });
+  localStorage.setItem('pb_audit_log', JSON.stringify(logs));
+}
+
+function getAuditLogs() {
+  return JSON.parse(localStorage.getItem('pb_audit_log') || '[]');
+}
+
+// ── Quản lý thành viên ─────────────────────────────────────
+
+function renderMemberList() {
+  const container = document.getElementById('memberList');
+  document.getElementById('memberCount').textContent = `(${members.length} người)`;
+
+  let html = '';
+  members.forEach(m => {
+    const initial = m.name.charAt(0).toUpperCase();
+    const roleCls = m.role === 'admin' ? 'admin' : (m.status === 'guest' ? 'guest' : 'member');
+    const roleLabel = m.role === 'admin' ? 'Admin' : (m.status === 'guest' ? 'Khách' : 'Member');
+
+    html += `
+      <div class="member-row">
+        <div class="member-info">
+          <div class="member-avatar">${initial}</div>
+          <div>
+            <div class="member-name">${m.name}</div>
+            <span class="member-role ${roleCls}">${roleLabel}</span>
+          </div>
+        </div>
+        <div class="member-actions">
+          <button class="icon-btn" onclick="renameMember('${m.name}')" title="Đổi tên">✏️</button>
+          ${m.role !== 'admin' ? `<button class="icon-btn danger" onclick="removeMember('${m.name}')" title="Xóa">🗑</button>` : ''}
+        </div>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+function adminAddMember() {
+  const input = document.getElementById('newMemberName');
+  const name = input.value.trim();
+  if (!name) { showToast('Nhập tên thành viên!', 'error'); return; }
+  if (members.find(m => m.name === name)) { showToast('Tên đã tồn tại!', 'error'); return; }
+
+  members.push({ id: 'M' + Date.now(), name, role: 'member', status: 'active' });
+
+  // Save to API
+  if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+    apiPost('addGuest', { name }).catch(() => {});
+  }
+
+  // Save locally
+  localStorage.setItem('pb_members', JSON.stringify(members));
+  input.value = '';
+  renderMemberList();
+  showToast('Đã thêm ' + name, 'success');
+}
+
+function renameMember(oldName) {
+  const newName = prompt('Đổi tên "' + oldName + '" thành:', oldName);
+  if (!newName || !newName.trim() || newName.trim() === oldName) return;
+  if (members.find(m => m.name === newName.trim())) { showToast('Tên đã tồn tại!', 'error'); return; }
+
+  const member = members.find(m => m.name === oldName);
+  if (member) {
+    member.name = newName.trim();
+    localStorage.setItem('pb_members', JSON.stringify(members));
+    renderMemberList();
+    showToast('Đã đổi tên thành ' + newName.trim(), 'success');
+  }
+}
+
+function removeMember(name) {
+  if (!confirm('Xóa thành viên "' + name + '"? Dữ liệu trận đấu vẫn giữ nguyên.')) return;
+  members = members.filter(m => m.name !== name);
+  localStorage.setItem('pb_members', JSON.stringify(members));
+  renderMemberList();
+  showToast('Đã xóa ' + name, 'success');
+}
+
+// ── Admin: Xác nhận thu ─────────────────────────────────────
+
+function renderAdminPending() {
+  const container = document.getElementById('adminPendingList');
+  // Get demo or real data
+  let fundData;
+  try {
+    fundData = generateDemoFund();
+  } catch(e) {
+    fundData = { pending: [] };
+  }
+
+  const reported = fundData.all ? fundData.all.filter(t => t.status === 'reported') : [];
+  if (reported.length === 0) {
+    container.innerHTML = '<div class="empty-state" style="padding:12px"><div class="empty-state-text">Không có giao dịch chờ duyệt</div></div>';
+    return;
+  }
+
+  let html = '';
+  reported.forEach(tx => {
+    const typeLabel = tx.type === 'match_fee' ? 'Độ trận' : 'Nộp Quỹ';
+    html += `
+      <div class="tx-card" style="margin-bottom:8px">
+        <div class="tx-info">
+          <div class="tx-name">${tx.member}</div>
+          <div class="tx-detail">${typeLabel} · ${tx.note || ''} · ${tx.date}</div>
+        </div>
+        <div style="text-align:right">
+          <div class="tx-amount" style="color:var(--warning);font-weight:700">${formatVND(tx.amount)}</div>
+          <button class="btn btn-sm btn-primary" style="margin-top:4px" onclick="confirmPayment('${tx.tx_id}')">✓ Xác nhận</button>
+        </div>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+// ── Admin: Ghi khoản chi ────────────────────────────────────
+
+function adminAddExpense() {
+  const note = document.getElementById('expenseNote').value.trim();
+  const amountInput = document.getElementById('expenseAmount');
+  const amount = getMoneyInputValue(amountInput);
+
+  if (!note) { showToast('Nhập mô tả khoản chi!', 'error'); return; }
+  if (!amount || amount <= 0) { showToast('Nhập số tiền!', 'error'); return; }
+
+  if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+    apiPost('reportPayment', { member: currentUser.name, amount, type: 'expense', note })
+      .catch(err => showToast('Lỗi: ' + err.message, 'error'));
+  }
+
+  // Save to localStorage
+  addFundTransaction({
+    tx_id: 'TX' + Date.now(),
+    date: todayStr(),
+    member: currentUser.name,
+    amount,
+    type: 'expense',
+    status: 'confirmed',
+    match_id: '',
+    note,
+    confirmed_by: currentUser.name
+  });
+
+  // Log the expense
+  addAuditLog('expense', `Chi ${formatVND(amount)} — ${note}`, currentUser.name);
+
+  // Clear form
+  document.getElementById('expenseNote').value = '';
+  amountInput.value = '';
+  amountInput.dataset.rawValue = '';
+  showToast('Đã ghi khoản chi: ' + formatVND(amount) + ' — ' + note, 'success');
+}
+
+// ── Quy Chế ─────────────────────────────────────────────────
+
+function loadQuyChe() {
+  const saved = localStorage.getItem('pb_quyche');
+  if (!saved) return;
+  try {
+    const qc = JSON.parse(saved);
+    // Update admin form if admin
+    if (currentUser && currentUser.role === 'admin') {
+      const loc = document.getElementById('cfgLocation');
+      const sched = document.getElementById('cfgSchedule');
+      const fee = document.getElementById('cfgMonthlyFee');
+      const extra = document.getElementById('cfgExtraRules');
+      if (loc) loc.value = qc.location || '';
+      if (sched) sched.value = qc.schedule || '';
+      if (fee) { fee.value = qc.monthlyFee || ''; fee.dataset.rawValue = (qc.monthlyFee || '').replace(/\D/g, ''); }
+      if (extra) extra.value = qc.extraRules || '';
+    }
+    // Render in guide tab
+    renderQuyCheDisplay(qc);
+  } catch(e) {}
+}
+
+function renderQuyCheDisplay(qc) {
+  // Update the fixed fields
+  const steps = document.querySelectorAll('#quyCheContent .guide-step-desc');
+  if (qc.location && steps[0]) steps[0].innerHTML = qc.location;
+  if (qc.schedule && steps[1]) steps[1].innerHTML = qc.schedule;
+  if (qc.monthlyFee && steps[2]) steps[2].innerHTML = qc.monthlyFee + 'đ / tháng / người';
+
+  // Extra rules
+  const extraDiv = document.getElementById('quyCheExtra');
+  if (qc.extraRules && extraDiv) {
+    const lines = qc.extraRules.split('\n').filter(l => l.trim());
+    let html = '';
+    lines.forEach(line => {
+      html += `
+        <div class="guide-step" style="margin-top:8px">
+          <div class="guide-step-num">📌</div>
+          <div class="guide-step-content">
+            <div class="guide-step-desc" style="color:var(--text)">${line}</div>
+          </div>
+        </div>
+      `;
+    });
+    extraDiv.innerHTML = html;
+  }
+}
+
+function saveQuyChe() {
+  const qc = {
+    location: document.getElementById('cfgLocation').value.trim(),
+    schedule: document.getElementById('cfgSchedule').value.trim(),
+    monthlyFee: document.getElementById('cfgMonthlyFee').value.trim(),
+    extraRules: document.getElementById('cfgExtraRules').value.trim()
+  };
+  localStorage.setItem('pb_quyche', JSON.stringify(qc));
+  renderQuyCheDisplay(qc);
+  showToast('Đã lưu Quy Chế!', 'success');
+}
+
+// ── Cài đặt ngân hàng ──────────────────────────────────────
+
+function saveBankConfig() {
+  config.bank_name = document.getElementById('cfgBankName').value.trim();
+  config.bank_account = document.getElementById('cfgBankAccount').value.trim();
+  config.account_holder = document.getElementById('cfgAccountHolder').value.trim();
+  localStorage.setItem('pb_config', JSON.stringify(config));
+  showToast('Đã lưu thông tin ngân hàng!', 'success');
+}
+
+// ── Đăng xuất ───────────────────────────────────────────────
+
+function logout() {
+  localStorage.removeItem('pb_user');
+  currentUser = null;
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('screen-login').style.display = 'flex';
+  // Reset tabs
+  document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-tab="tab-today"]').classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-today').classList.add('active');
+}
+
+// ══════════════════════════════════════════════════════════════
+//  DEMO DATA
+// ══════════════════════════════════════════════════════════════
+
+// ══════════════════════════════════════════════════════════════
+//  FUND DATA (localStorage-backed)
+// ══════════════════════════════════════════════════════════════
+
+const DEMO_FUND_DATA = [
+  { tx_id: 'TX001', date: '2026-04-10', member: 'Hà', amount: 50000, type: 'match_fee', status: 'confirmed', match_id: 'MT001', note: 'Thua trận 1', confirmed_by: 'Trung Béo' },
+  { tx_id: 'TX002', date: '2026-04-10', member: 'Oanh', amount: 50000, type: 'match_fee', status: 'confirmed', match_id: 'MT001', note: 'Thua trận 1', confirmed_by: 'Trung Béo' },
+  { tx_id: 'TX003', date: '2026-04-17', member: 'Hoàng', amount: 100000, type: 'match_fee', status: 'confirmed', match_id: 'MT003', note: 'Thua trận 3', confirmed_by: 'Trung Béo' },
+  { tx_id: 'TX004', date: '2026-04-17', member: 'Huyền', amount: 100000, type: 'match_fee', status: 'confirmed', match_id: 'MT004', note: 'Thua trận 4', confirmed_by: 'Trung Béo' },
+  { tx_id: 'TX005', date: '2026-04-24', member: 'Hà', amount: 50000, type: 'match_fee', status: 'pending', match_id: 'MT005', note: 'Thua trận 5' },
+  { tx_id: 'TX006', date: '2026-04-24', member: 'Hoàng BD', amount: 50000, type: 'match_fee', status: 'pending', match_id: 'MT006', note: 'Thua trận 6' },
+  { tx_id: 'TX007', date: '2026-05-01', member: 'Oanh', amount: 100000, type: 'match_fee', status: 'reported', match_id: 'MT007', note: 'Thua trận 7 — đã CK' },
+  { tx_id: 'TX008', date: '2026-05-01', member: 'Hoàng', amount: 50000, type: 'match_fee', status: 'pending', match_id: 'MT008', note: 'Thua trận 8' },
+  { tx_id: 'TX009', date: '2026-04-05', member: 'Trung Béo', amount: 500000, type: 'donation', status: 'confirmed', match_id: '', note: 'Quỹ khởi đầu', confirmed_by: 'Trung Béo' },
+  { tx_id: 'TX010', date: '2026-04-20', member: 'Hoàng BD', amount: 200000, type: 'donation', status: 'confirmed', match_id: '', note: 'Nộp quỹ tháng 4', confirmed_by: 'Trung Béo' },
+  { tx_id: 'TX011', date: '2026-05-03', member: 'Huyền', amount: 150000, type: 'donation', status: 'reported', match_id: '', note: 'Nộp quỹ T5 — đã CK' },
+  { tx_id: 'TX012', date: '2026-04-12', member: 'Trung Béo', amount: 350000, type: 'expense', status: 'confirmed', match_id: '', note: 'Mua bóng pickle x10', confirmed_by: 'Trung Béo' },
+  { tx_id: 'TX013', date: '2026-04-28', member: 'Trung Béo', amount: 200000, type: 'expense', status: 'confirmed', match_id: '', note: 'Nước uống + trái cây buổi T5 24/04', confirmed_by: 'Trung Béo' },
+];
+
+function getFundTransactions() {
+  const saved = localStorage.getItem('pb_fund_txs');
+  if (saved) {
+    try { return JSON.parse(saved); } catch(e) {}
+  }
+  // First time: seed with demo data
+  localStorage.setItem('pb_fund_txs', JSON.stringify(DEMO_FUND_DATA));
+  return [...DEMO_FUND_DATA];
+}
+
+function saveFundTransactions(txs) {
+  localStorage.setItem('pb_fund_txs', JSON.stringify(txs));
+}
+
+function addFundTransaction(tx) {
+  const txs = getFundTransactions();
+  txs.push(tx);
+  saveFundTransactions(txs);
+}
+
+function updateFundTransaction(txId, updates) {
+  const txs = getFundTransactions();
+  const idx = txs.findIndex(t => t.tx_id === txId);
+  if (idx >= 0) {
+    Object.assign(txs[idx], updates);
+    saveFundTransactions(txs);
+    return txs[idx];
+  }
+  return null;
+}
+
+function calcFundTotals(txs) {
+  let totalIn = 0, totalOut = 0;
+  txs.forEach(tx => {
+    const amt = Number(tx.amount);
+    if (tx.type === 'expense') {
+      // Chi tiêu → trừ quỹ
+      totalOut += amt;
+    } else if (tx.type === 'donation' && tx.status === 'confirmed') {
+      // Nộp quỹ / CK đã xác nhận → cộng quỹ
+      totalIn += amt;
+    }
+    // match_fee (thua độ) → KHÔNG ảnh hưởng quỹ, chỉ tracking
+  });
+  // Pending = chưa xong (cả match_fee và donation)
+  const pending = txs.filter(t => t.status === 'pending' || t.status === 'reported');
+  return { balance: totalIn - totalOut, totalIn, totalOut, pending, all: txs };
+}
+
+// ══════════════════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════════════════
+
+async function init() {
+  // Try to restore session
+  const saved = localStorage.getItem('pb_user');
+  if (saved) {
+    try {
+      currentUser = JSON.parse(saved);
+    } catch (e) {}
+  }
+
+  // Load config from localStorage or API
+  const savedConfig = localStorage.getItem('pb_config');
+  if (savedConfig) {
+    try { config = JSON.parse(savedConfig); } catch(e) {}
+  }
+  try {
+    if (API_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_URL') {
+      const res = await apiGet('getConfig');
+      config = res.data || config;
+    }
+  } catch (err) {}
+
+  // Load saved members from localStorage (admin edits)
+  const savedMembers = localStorage.getItem('pb_members');
+  if (savedMembers) {
+    try {
+      const parsed = JSON.parse(savedMembers);
+      if (parsed.length > 0) members = parsed;
+    } catch(e) {}
+  }
+
+  // Load fund init balance
+  fundInitBalance = parseInt(localStorage.getItem('pb_fund_init') || '0');
+
+  // Init default quy che if not set
+  if (!localStorage.getItem('pb_quyche')) {
+    const defaultQC = {
+      location: '107 Ngụy Như Kon Tum',
+      schedule: '19h - 22h Thứ 4 hàng tuần',
+      monthlyFee: '1.000.000',
+      extraRules: 'Đánh ít (vắng >= 2 buổi/tháng): 500.000đ/tháng'
+    };
+    localStorage.setItem('pb_quyche', JSON.stringify(defaultQC));
+  }
+
+  await initLogin();
+
+  // Auto-login if session exists (skip PIN for 7 days)
+  const loginTs = parseInt(localStorage.getItem('pb_login_ts') || '0');
+  const SESSION_DAYS = 7;
+  const sessionValid = (Date.now() - loginTs) < SESSION_DAYS * 24 * 60 * 60 * 1000;
+
+  if (currentUser && sessionValid && members.find(m => m.name === currentUser.name)) {
+    const member = members.find(m => m.name === currentUser.name);
+    currentUser.role = member.role;
+    showApp();
+  } else if (currentUser && !sessionValid) {
+    // Session expired, clear
+    localStorage.removeItem('pb_user');
+    localStorage.removeItem('pb_login_ts');
+    currentUser = null;
+  }
+}
+
+init();
+</script>
+</body>
+</html>
