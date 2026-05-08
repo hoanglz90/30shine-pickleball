@@ -38,6 +38,9 @@ function doGet(e) {
       case 'getConfig':
         result = handleGetConfig();
         break;
+      case 'fixAdmin':
+        result = handleFixAdmin(e.parameter);
+        break;
       default:
         result = { error: 'Unknown action: ' + action };
     }
@@ -399,6 +402,23 @@ function formatVND(n) {
   if (n >= 1000000) return (n / 1000000).toFixed(1).replace('.0', '') + 'tr';
   if (n >= 1000) return Math.round(n / 1000) + 'k';
   return n + 'đ';
+}
+
+// ── GET: Fix Admin (one-time) ───────────────────────────────
+
+function handleFixAdmin(params) {
+  const name = params.name || 'Trung Béo';
+  const sheet = getSheet('Members');
+  const data = sheet.getDataRange().getValues();
+  for (let i = 1; i < data.length; i++) {
+    if (data[i][1] === name) {
+      sheet.getRange(i + 1, 3).setValue('admin');  // role
+      sheet.getRange(i + 1, 4).setValue('active'); // status
+      sheet.getRange(i + 1, 6).setValue('⭐');     // emoji
+      return { success: true, message: name + ' is now admin' };
+    }
+  }
+  return { success: false, error: 'Not found: ' + name };
 }
 
 // ── GET: Config ─────────────────────────────────────────────
